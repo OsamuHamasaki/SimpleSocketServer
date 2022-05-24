@@ -52,6 +52,14 @@ EchoServer class >> example [
 		clientSocket closeAndDestroy ]] fork
 ]
 
+{ #category : #'class initialization' }
+EchoServer class >> initialize [
+	
+	"self initialize"
+	singleton := nil.
+
+]
+
 { #category : #accessing }
 EchoServer class >> start [
 
