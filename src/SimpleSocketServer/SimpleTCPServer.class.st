@@ -25,10 +25,17 @@ Class {
 		'connectionSocket',
 		'isRunning',
 		'isRunningLock',
-		'onDataReceivedBlock'
+		'onDataReceivedBlock',
+		'listeningPort'
 	],
 	#category : #SimpleSocketServer
 }
+
+{ #category : #'default values' }
+SimpleTCPServer >> defaultListeningPort [
+	
+	^9999
+]
 
 { #category : #initialization }
 SimpleTCPServer >> initialize [
@@ -37,6 +44,7 @@ SimpleTCPServer >> initialize [
 	isRunningLock := Mutex new.
 	self isRunning: false.
 	onDataReceivedBlock := [].
+	listeningPort := self defaultListeningPort.
 ]
 
 { #category : #private }
@@ -77,6 +85,18 @@ SimpleTCPServer >> isRunning: aBoolean [
 ]
 
 { #category : #accessing }
+SimpleTCPServer >> listeningPort [
+	
+	^listeningPort
+]
+
+{ #category : #accessing }
+SimpleTCPServer >> listeningPort: aNumber [
+	
+	listeningPort := aNumber
+]
+
+{ #category : #accessing }
 SimpleTCPServer >> onDataReceive: aBlock [
 	
 	onDataReceivedBlock := aBlock
@@ -99,7 +119,7 @@ SimpleTCPServer >> start [
 		self isRunning: true.  ].
 	
 	connectionSocket := Socket newTCP.
-	connectionSocket listenOn: 9999 backlogSize: 10.
+	connectionSocket listenOn: self listeningPort backlogSize: 10.
 	[ self serve ] fork 
 ]
 
