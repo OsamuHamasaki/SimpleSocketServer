@@ -41,7 +41,7 @@ EchoServer class >> example [
 	clientSocket := Socket newTCP.
 	[[ 
 	clientSocket
-		connectTo: serverAddress port: 9999;
+		connectTo: serverAddress port: 3000;
 		waitForConnectionFor: 10.
 	10 timesRepeat: [ 
 		clientSocket sendData: 'Hello, Pharo!'.
@@ -81,5 +81,6 @@ EchoServer class >> stop [
 EchoServer >> initialize [ 
 	
 	super initialize.
+	self listeningPort: 3000.
 	self onDataReceive: [ :socket :receivedData | socket sendData: 'ECHO: ', receivedData  ].
 ]
