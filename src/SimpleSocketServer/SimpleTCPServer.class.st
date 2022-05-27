@@ -62,7 +62,7 @@ SimpleTCPServer >> interactUsing: interactionSocket [
 	| receivedData |
 	[ | connected |
 	connected := true.
-	[connected] whileTrue: [
+	[self isRunning and:[connected]] whileTrue: [
 		receivedData := interactionSocket receiveDataTimeout: 5.
 		receivedData =  ''
 			ifTrue: [ connected := false ]
